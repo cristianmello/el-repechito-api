@@ -3,7 +3,7 @@ const { uploadToBunny, deleteFromBunny } = require('../../services/bunnystorage'
 
 module.exports = async function updateProfileImage(req, res) {
     try {
-        const userId = req.user.id;
+        const userId = req.user.user_code;
         const file = req.file;
         if (!file) {
             return res.status(400).json({ status: 'error', message: 'No se envió ninguna imagen.' });

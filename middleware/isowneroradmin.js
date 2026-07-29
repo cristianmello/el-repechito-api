@@ -12,9 +12,9 @@ function isOwnerOrAdmin(getOwnerIdFn) {
     }
 
     const requestedId = getOwnerIdFn(req);
-    const isOwner = user.id === requestedId;
-    const isAdmin = user.roles.includes('admin');
-    const isSuperAdmin = user.roles.includes('superadmin');
+    const isOwner = user.user_code === requestedId;
+    const isAdmin = user.role_code === 'admin' || user.role_name === 'admin';
+    const isSuperAdmin = user.role_code === 'superadmin' || user.role_name === 'superadmin';
 
     if (!isOwner && !isAdmin && !isSuperAdmin) {
       return res.status(403).json({ status: 'error', message: 'Acceso denegado' });

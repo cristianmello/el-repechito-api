@@ -2,7 +2,7 @@
 const Order = require('../../models/order');
 const Payment = require('../../models/payment');
 const sequelize = Order.sequelize;
-const { restoreStockByOrder } = require('../../services/stockService');
+const { restoreStockFromOrder } = require('../../services/stockService');
 
 module.exports = async (req, res) => {
     const t = await sequelize.transaction();
@@ -70,7 +70,7 @@ module.exports = async (req, res) => {
             );
 
             // 🔁 RESTOCK AUTOMÁTICO
-            await restoreStockByOrder(order.order_code, t);
+            await restoreStockFromOrder(order.order_code, t);
 
             await order.update(
                 { status: 'cancelled', payment_status: 'rejected' },

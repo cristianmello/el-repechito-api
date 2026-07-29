@@ -59,7 +59,7 @@ async function updatePaymentFromProvider(payment, order, providerResponse) {
         });
 
         await order.update({
-            payment_status: 'paid',
+            payment_status: 'approved',
             status: 'confirmed'
         });
 

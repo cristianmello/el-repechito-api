@@ -4,7 +4,7 @@ const MAX_REQUESTS_PER_DAY = 4;
 
 module.exports = {
     rateLimiter: async (req, res, next) => {
-        const userId = req.user?.id;
+        const userId = req.user?.user_code;
         if (!userId) {
             return res.status(401).json({
                 status: 'error',

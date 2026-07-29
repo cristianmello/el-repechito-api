@@ -69,8 +69,22 @@ const deleteAccount = async (req, res) => {
       });
     }
 
-    // (Opcional) evitar borrar el último admin — no implementado aquí, pero recomendable en producción.
 
+    // Verificar que no sea el último admin  
+    if (targetRoleName === 'admin' || targetRoleName === 'superadmin') {
+      const adminCount = await User.count({
+        where: {
+          role_code: userToDelete.role_code
+        }
+      });
+
+      if (adminCount <= 1) {
+        return res.status(403).json({
+          status: 'error',
+          message: 'No puedes eliminar al último administrador del sistema.'
+        });
+      }
+    }
     await userToDelete.destroy();
 
     return res.json({ status: 'success', message: 'Cuenta eliminada correctamente.' });

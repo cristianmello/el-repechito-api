@@ -5,7 +5,7 @@ const updateProfile = async (req, res) => {
   const t = await User.sequelize.transaction();
 
   try {
-    const user_code = req.user.id;
+    const user_code = req.user.user_code;
     const changed_by = user_code; // preparado para admins en el futuro
 
     const fieldsToUpdate = ['user_name', 'user_lastname', 'user_birth', 'user_phone'];

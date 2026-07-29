@@ -18,15 +18,21 @@ const errorHandler = require('./middleware/errorHandler');
 const startOrderExpirationJob = require('./jobs/orderexpiration.job');
 
 // Routers
-const productsouter = require('./router/product');
-const categoriesRouter = require('./router/category');
 const productsRouter = require('./router/product');
+const categoriesRouter = require('./router/category');
 const authRouter = require('./router/user');
+const ordersRouter = require('./router/order');
+const webhooksRouter = require('./router/webhooks');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.set('trust proxy', 1);
+/*app.set('trust proxy', 1);
+*/
+
+if (process.env.TRUST_PROXY === 'true') {
+    app.set('trust proxy', 1);
+}
 
 /* ======================
    Middlewares globales
@@ -82,14 +88,14 @@ app.get('/health', (req, res) => {
 // Auth / usuarios (login, roles, etc)
 app.use('/api/auth', authRouter);
 
-// Artículos (CMS / contenido)
-app.use('/api/articles', productsouter);
-
 // Categorías (artículos / productos)
 app.use('/api/categories', categoriesRouter);
 
 // Productos (almacén)
 app.use('/api/products', productsRouter);
+
+app.use('/api/orders', ordersRouter);
+app.use('/api/webhooks', webhooksRouter);
 
 /* ======================
    404
@@ -113,7 +119,7 @@ app.use((err, req, res, next) => {
         method: req.method,
         path: req.originalUrl,
         stack: err.stack,
-        user: req.user?.id
+        user: req.user?.user_code
     });
 
     errorHandler(err, req, res, next);
