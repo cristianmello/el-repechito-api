@@ -60,9 +60,9 @@ const Order = sequelize.define('Order', {
         }
     },
     status: {
-        type: DataTypes.ENUM('pending', 'paid', 'ready', 'cancelled', 'completed'),
+        type: DataTypes.ENUM('pending', 'paid', 'ready', 'cancelled', 'completed', 'confirmed', 'payment_failed', 'refunded'),
         allowNull: false,
-        defaultValue: 'pending'
+        defaultValue: 'pending' 
     },
     total_amount: {
         type: DataTypes.DECIMAL(10, 2),
@@ -74,7 +74,7 @@ const Order = sequelize.define('Order', {
         }
     },
     payment_status: {
-        type: DataTypes.ENUM('pending', 'approved', 'rejected', 'refunded'),
+        type: DataTypes.ENUM('pending', 'approved', 'rejected', 'refunded', 'paid'),
         allowNull: false,
         defaultValue: 'pending'
     },
