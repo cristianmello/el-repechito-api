@@ -8,7 +8,7 @@ const cors = require('cors');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
-const { v4: uuidv4 } = require('uuid');
+const { randomUUID } = require('crypto');
 
 const database = require('./database/connection');
 require('./database/associations');
@@ -44,7 +44,7 @@ app.use(cors({
 
 // Request ID (trazabilidad)
 app.use((req, res, next) => {
-    req.id = uuidv4();
+    req.id = randomUUID();
     res.setHeader('X-Request-Id', req.id);
     next();
 });
