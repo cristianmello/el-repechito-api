@@ -18,8 +18,8 @@ const errorHandler = require('./middleware/errorhandler');
 const startOrderExpirationJob = require('./jobs/orderexpiration.job');
 
 // Routers
-const categoriesRouter = require('./router/category');
 const productsRouter = require('./router/product');
+const categoriesRouter = require('./router/category');
 const authRouter = require('./router/user');
 const ordersRouter = require('./router/order');
 const webhooksRouter = require('./router/webhooks');
@@ -27,7 +27,12 @@ const webhooksRouter = require('./router/webhooks');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.set('trust proxy', 1);
+/*app.set('trust proxy', 1);
+*/
+
+if (process.env.TRUST_PROXY === 'true') {
+    app.set('trust proxy', 1);
+}
 
 /* ======================
    Middlewares globales
@@ -87,9 +92,6 @@ app.get('/health', (req, res) => {
 app.use('/api/users', authRouter);
 app.use('/api/auth', authRouter);
 
-// Artículos (CMS / contenido)
-app.use('/api/articles', productsRouter);
-
 // Categorías (artículos / productos)
 app.use('/api/categories', categoriesRouter);
 
@@ -121,7 +123,7 @@ app.use((err, req, res, next) => {
         method: req.method,
         path: req.originalUrl,
         stack: err.stack,
-        user: req.user?.id
+        user: req.user?.user_code
     });
 
     errorHandler(err, req, res, next);

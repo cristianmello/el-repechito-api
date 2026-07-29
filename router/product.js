@@ -9,6 +9,9 @@ const uploadMemory = require('../middleware/bunny/uploadmemory');
 
 const uploadArticleContentImage = require('../controller/products/uploadarticlecontentimage');
 
+const uploadMemory = require('../middleware/bunny/uploadmemory');
+const uploadArticleContentImage = require('../controller/products/uploadarticlecontentimage');
+
 // (si tenés validaciones específicas de producto, acá irían)
 // const validateProductCreate = require('../middleware/validateproductcreate');
 // const validateProductUpdate = require('../middleware/validateproductupdate');

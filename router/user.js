@@ -88,7 +88,7 @@ router.get('/verify-email', VerifyEmail);
 // Rutas protegidas con JWT
 router.get('/profile', authenticate, GetProfile);
 //router.get('/me/comments', authenticate, GetMyComments);
-router.put('/update', authenticate, isOwnerOrAdmin(req => req.user.id),
+router.put('/update', authenticate, isOwnerOrAdmin(req => req.user.user_code),
   validateUserUpdate, handleValidationErrors, UpdateProfile);
 router.post('/change-password', authenticate, validateChangePassword, handleValidationErrors, ChangePassword);
 router.post('/logout', authenticate, Logout);
