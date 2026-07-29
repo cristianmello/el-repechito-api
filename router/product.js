@@ -5,6 +5,9 @@ const router = express.Router();
 const authenticate = require('../middleware/verifytoken');
 const authorize = require('../middleware/authorizerole');
 const handleValidationErrors = require('../middleware/handlevalidationerrors');
+const uploadMemory = require('../middleware/bunny/uploadmemory');
+
+const uploadArticleContentImage = require('../controller/products/uploadarticlecontentimage');
 
 const uploadMemory = require('../middleware/bunny/uploadmemory');
 const uploadArticleContentImage = require('../controller/products/uploadarticlecontentimage');
