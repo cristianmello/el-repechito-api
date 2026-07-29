@@ -14,14 +14,15 @@ const database = require('./database/connection');
 require('./database/associations');
 
 const logger = require('./utils/logger');
-const errorHandler = require('./middleware/errorHandler');
+const errorHandler = require('./middleware/errorhandler');
 const startOrderExpirationJob = require('./jobs/orderexpiration.job');
 
 // Routers
-const productsouter = require('./router/product');
 const categoriesRouter = require('./router/category');
 const productsRouter = require('./router/product');
 const authRouter = require('./router/user');
+const ordersRouter = require('./router/order');
+const webhooksRouter = require('./router/webhooks');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -47,6 +48,9 @@ app.use((req, res, next) => {
     res.setHeader('X-Request-Id', req.id);
     next();
 });
+
+// Webhooks (MercadoPago) — antes de los parsers para capturar rawBody
+app.use('/api/webhooks', webhooksRouter);
 
 // Parsers
 app.use(express.json({ limit: '2mb' }));
@@ -80,16 +84,20 @@ app.get('/health', (req, res) => {
 ====================== */
 
 // Auth / usuarios (login, roles, etc)
+app.use('/api/users', authRouter);
 app.use('/api/auth', authRouter);
 
 // Artículos (CMS / contenido)
-app.use('/api/articles', productsouter);
+app.use('/api/articles', productsRouter);
 
 // Categorías (artículos / productos)
 app.use('/api/categories', categoriesRouter);
 
 // Productos (almacén)
 app.use('/api/products', productsRouter);
+
+// Órdenes
+app.use('/api/orders', ordersRouter);
 
 /* ======================
    404

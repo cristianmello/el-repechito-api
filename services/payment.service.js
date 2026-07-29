@@ -6,7 +6,7 @@ const { restoreStockFromOrder } = require('./stock.service');
 
 let MercadoPagoService = null;
 try {
-    MercadoPagoService = require('./mercadoPago');
+    MercadoPagoService = require('./mercadopago');
 } catch (_) {
     // proveedor opcional (tests / entornos sin MP)
 }

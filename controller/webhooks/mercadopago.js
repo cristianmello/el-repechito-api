@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const Payment = require('../../models/payment');
 const Order = require('../../models/order');
-const MercadoPagoService = require('../../services/mercadoPago');
+const MercadoPagoService = require('../../services/mercadopago');
 
 /**
  * Verifica firma MercadoPago

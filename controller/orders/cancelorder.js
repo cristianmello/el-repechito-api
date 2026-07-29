@@ -5,7 +5,7 @@ const OrderItem = require('../../models/orderitem');
 const Product = require('../../models/product');
 // Servicio de reembolso externo (implementalo según proveedor: mercadopago, stripe, etc.)
 let MercadoPagoService;
-try { MercadoPagoService = require('../../services/mercadoPago'); } catch (e) { MercadoPagoService = null; }
+try { MercadoPagoService = require('../../services/mercadopago'); } catch (e) { MercadoPagoService = null; }
 
 module.exports = async (req, res) => {
     const t = await Order.sequelize.transaction();
